@@ -1,6 +1,7 @@
 package com.bjss.william.employees.dao.hibernate;
 
 import com.bjss.william.employees.dao.TitlesDao;
+import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.model.Title;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,7 @@ public abstract class AbstractTitlesDao implements TitlesDao {
     @Override
     public List<Title> getTitlesByEmployeeNumber(int employeeNumber) {
         Session session = getCurrentSession();
-        String hql = String.format("from Title where emp_no = %d", employeeNumber);
-        List<Title> titles = session.createQuery(hql).list();
-        return titles;
+        Employee employee = (Employee) session.get(Employee.class, employeeNumber);
+        return employee.getTitles();
     }
 }
