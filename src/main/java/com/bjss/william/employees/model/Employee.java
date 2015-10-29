@@ -35,8 +35,20 @@ public class Employee {
     @JsonIgnore
     private List<Title> titles;
 
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private List<Salary> salaries;
+
     public Employee() {
         super();
+    }
+
+    public List<Salary> getSalaries() {
+        return salaries;
+    }
+
+    public void setSalaries(List<Salary> salaries) {
+        this.salaries = salaries;
     }
 
     public List<Title> getTitles() {

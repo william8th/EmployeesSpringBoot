@@ -35,6 +35,19 @@ public class EmployeesController {
     }
 
 
+    @RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") String id) {
+        Employee employee = employeesDao.getEmployeeById(Integer.parseInt(id));
+
+        if (employee == null) {
+            return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+        }
+    }
+
+
     @RequestMapping(
             value = "/employees",
             method = RequestMethod.POST,
@@ -46,18 +59,5 @@ public class EmployeesController {
     ) {
         employeesDao.addEmployee(employee);
         return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
-    }
-
-
-    @RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Employee> getEmployee(@PathVariable(value = "id") String id) {
-        Employee employee = employeesDao.getEmployeeById(Integer.parseInt(id));
-
-        if (employee == null) {
-            return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-        }
     }
 }
