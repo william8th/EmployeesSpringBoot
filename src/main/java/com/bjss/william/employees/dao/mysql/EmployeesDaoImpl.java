@@ -25,9 +25,7 @@ public class EmployeesDaoImpl implements EmployeesDao {
     @Override
     public void addEmployee(Employee employee) {
         Session session = getCurrentSession();
-        Transaction tx = session.beginTransaction();
         session.save(employee);
-        tx.commit();
     }
 
     @Override
