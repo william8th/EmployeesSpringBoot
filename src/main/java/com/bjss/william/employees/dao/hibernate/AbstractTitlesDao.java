@@ -1,4 +1,4 @@
-package com.bjss.william.employees.dao.mysql;
+package com.bjss.william.employees.dao.hibernate;
 
 import com.bjss.william.employees.dao.TitlesDao;
 import com.bjss.william.employees.model.Title;
@@ -7,14 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by William Heng(dev) on 28/10/15.
  */
 
-@Repository
-public class TitlesDaoImpl implements TitlesDao {
+@Transactional
+public abstract class AbstractTitlesDao implements TitlesDao {
 
     @PersistenceContext
     EntityManager entityManager;

@@ -1,19 +1,16 @@
-package com.bjss.william.employees.dao.mysql;
+package com.bjss.william.employees.dao.hibernate;
 
 import com.bjss.william.employees.dao.EmployeesDao;
 import com.bjss.william.employees.model.Employee;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Repository
 @Transactional
-public class EmployeesDaoImpl implements EmployeesDao {
+public abstract class AbstractEmployeesDao implements EmployeesDao {
 
     @PersistenceContext
     private EntityManager entityManager;
