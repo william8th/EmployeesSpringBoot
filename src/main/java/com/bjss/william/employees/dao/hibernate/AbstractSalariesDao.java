@@ -3,10 +3,7 @@ package com.bjss.william.employees.dao.hibernate;
 import com.bjss.william.employees.dao.SalariesDao;
 import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.model.Salary;
-import org.hibernate.Session;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -15,14 +12,7 @@ import java.util.List;
  */
 
 @Transactional
-public abstract class AbstractSalariesDao implements SalariesDao {
-
-    @PersistenceContext
-    EntityManager entityManager;
-
-    protected Session getCurrentSession() {
-        return entityManager.unwrap(Session.class);
-    }
+public abstract class AbstractSalariesDao extends GenericDao implements SalariesDao {
 
     @Override
     public List<Salary> getSalariesById(int employeeNumber) {

@@ -4,20 +4,11 @@ import com.bjss.william.employees.dao.EmployeesDao;
 import com.bjss.william.employees.model.Employee;
 import org.hibernate.Session;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional
-public abstract class AbstractEmployeesDao implements EmployeesDao {
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    private Session getCurrentSession() {
-        return entityManager.unwrap(Session.class);
-    }
+public abstract class AbstractEmployeesDao extends GenericDao implements EmployeesDao {
 
     @Override
     public void addEmployee(Employee employee) {
