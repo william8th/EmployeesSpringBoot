@@ -1,7 +1,7 @@
 package com.bjss.william.employees.controller;
 
-import com.bjss.william.employees.dao.DepartmentsDao;
 import com.bjss.william.employees.model.Department;
+import com.bjss.william.employees.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class DepartmentsController {
     private final static String DEFAULT_RESULT_LIMIT = "10";
 
     @Autowired
-    private DepartmentsDao departmentsDao;
+    private DepartmentService departmentService;
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     @ResponseBody
@@ -32,7 +32,7 @@ public class DepartmentsController {
 
             if (resultLimit < 1) throw new RuntimeException();
 
-            return new ResponseEntity<>(departmentsDao.getDepartments(resultLimit), HttpStatus.OK);
+            return new ResponseEntity<>(departmentService.getDepartments(resultLimit), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

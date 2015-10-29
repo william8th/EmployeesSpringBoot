@@ -1,7 +1,7 @@
 package com.bjss.william.employees.controller;
 
-import com.bjss.william.employees.dao.EmployeesDao;
 import com.bjss.william.employees.model.Employee;
+import com.bjss.william.employees.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class EmployeesController {
     private static final String DEFAULT_RESULT_LIMIT = "10";
 
     @Autowired
-    private EmployeesDao employeesDao;
+    private EmployeeService employeeService;
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     @ResponseBody
@@ -26,7 +26,7 @@ public class EmployeesController {
     ) {
         try {
             int resultLimit = Integer.parseInt(limit);
-            return new ResponseEntity<>(employeesDao.getEmployees(resultLimit), HttpStatus.OK);
+            return new ResponseEntity<>(employeeService.getEmployees(resultLimit), HttpStatus.OK);
         } catch (NumberFormatException e) {
             // Not a valid number
             // Return error
@@ -38,12 +38,12 @@ public class EmployeesController {
     @RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") String id) {
-        Employee employee = employeesDao.getEmployeeById(Integer.parseInt(id));
+        Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
 
         if (employee == null) {
-            return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
         }
     }
 
@@ -57,7 +57,7 @@ public class EmployeesController {
     public ResponseEntity<Employee> addEmployee(
             @RequestBody Employee employee
     ) {
-        employeesDao.addEmployee(employee);
-        return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
+        employeeService.addEmployee(employee);
+        return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
 }

@@ -1,7 +1,9 @@
 package com.bjss.william.employees.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -9,7 +11,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "employees")
-public class Employee {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // Ignore lazy-loaded properties
+public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "emp_no")

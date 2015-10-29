@@ -1,7 +1,6 @@
 package com.bjss.william.employees;
 
 import com.bjss.william.employees.controller.EmployeesController;
-import com.bjss.william.employees.dao.EmployeesDao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
