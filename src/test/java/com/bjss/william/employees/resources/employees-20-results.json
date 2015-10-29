@@ -1,0 +1,141 @@
+[ {
+  "employeeNumber" : 10001,
+  "birthDate" : "1953-09-02",
+  "firstName" : "Georgi",
+  "lastName" : "Facello",
+  "gender" : "M",
+  "hireDate" : "1986-06-26"
+}, {
+  "employeeNumber" : 10002,
+  "birthDate" : "1964-06-02",
+  "firstName" : "Bezalel",
+  "lastName" : "Simmel",
+  "gender" : "F",
+  "hireDate" : "1985-11-21"
+}, {
+  "employeeNumber" : 10003,
+  "birthDate" : "1959-12-03",
+  "firstName" : "Parto",
+  "lastName" : "Bamford",
+  "gender" : "M",
+  "hireDate" : "1986-08-28"
+}, {
+  "employeeNumber" : 10004,
+  "birthDate" : "1954-05-01",
+  "firstName" : "Chirstian",
+  "lastName" : "Koblick",
+  "gender" : "M",
+  "hireDate" : "1986-12-01"
+}, {
+  "employeeNumber" : 10005,
+  "birthDate" : "1955-01-21",
+  "firstName" : "Kyoichi",
+  "lastName" : "Maliniak",
+  "gender" : "M",
+  "hireDate" : "1989-09-12"
+}, {
+  "employeeNumber" : 10006,
+  "birthDate" : "1953-04-20",
+  "firstName" : "Anneke",
+  "lastName" : "Preusig",
+  "gender" : "F",
+  "hireDate" : "1989-06-02"
+}, {
+  "employeeNumber" : 10007,
+  "birthDate" : "1957-05-23",
+  "firstName" : "Tzvetan",
+  "lastName" : "Zielinski",
+  "gender" : "F",
+  "hireDate" : "1989-02-10"
+}, {
+  "employeeNumber" : 10008,
+  "birthDate" : "1958-02-19",
+  "firstName" : "Saniya",
+  "lastName" : "Kalloufi",
+  "gender" : "M",
+  "hireDate" : "1994-09-15"
+}, {
+  "employeeNumber" : 10009,
+  "birthDate" : "1952-04-19",
+  "firstName" : "Sumant",
+  "lastName" : "Peac",
+  "gender" : "F",
+  "hireDate" : "1985-02-18"
+}, {
+  "employeeNumber" : 10010,
+  "birthDate" : "1963-06-01",
+  "firstName" : "Duangkaew",
+  "lastName" : "Piveteau",
+  "gender" : "F",
+  "hireDate" : "1989-08-24"
+}, {
+  "employeeNumber" : 10011,
+  "birthDate" : "1953-11-07",
+  "firstName" : "Mary",
+  "lastName" : "Sluis",
+  "gender" : "F",
+  "hireDate" : "1990-01-22"
+}, {
+  "employeeNumber" : 10012,
+  "birthDate" : "1960-10-04",
+  "firstName" : "Patricio",
+  "lastName" : "Bridgland",
+  "gender" : "M",
+  "hireDate" : "1992-12-18"
+}, {
+  "employeeNumber" : 10013,
+  "birthDate" : "1963-06-07",
+  "firstName" : "Eberhardt",
+  "lastName" : "Terkki",
+  "gender" : "M",
+  "hireDate" : "1985-10-20"
+}, {
+  "employeeNumber" : 10014,
+  "birthDate" : "1956-02-12",
+  "firstName" : "Berni",
+  "lastName" : "Genin",
+  "gender" : "M",
+  "hireDate" : "1987-03-11"
+}, {
+  "employeeNumber" : 10015,
+  "birthDate" : "1959-08-19",
+  "firstName" : "Guoxiang",
+  "lastName" : "Nooteboom",
+  "gender" : "M",
+  "hireDate" : "1987-07-02"
+}, {
+  "employeeNumber" : 10016,
+  "birthDate" : "1961-05-02",
+  "firstName" : "Kazuhito",
+  "lastName" : "Cappelletti",
+  "gender" : "M",
+  "hireDate" : "1995-01-27"
+}, {
+  "employeeNumber" : 10017,
+  "birthDate" : "1958-07-06",
+  "firstName" : "Cristinel",
+  "lastName" : "Bouloucos",
+  "gender" : "F",
+  "hireDate" : "1993-08-03"
+}, {
+  "employeeNumber" : 10018,
+  "birthDate" : "1954-06-19",
+  "firstName" : "Kazuhide",
+  "lastName" : "Peha",
+  "gender" : "F",
+  "hireDate" : "1987-04-03"
+}, {
+  "employeeNumber" : 10019,
+  "birthDate" : "1953-01-23",
+  "firstName" : "Lillian",
+  "lastName" : "Haddadi",
+  "gender" : "M",
+  "hireDate" : "1999-04-30"
+}, {
+  "employeeNumber" : 10020,
+  "birthDate" : "1952-12-24",
+  "firstName" : "Mayuko",
+  "lastName" : "Warwick",
+  "gender" : "M",
+  "hireDate" : "1991-01-26"
+} ]

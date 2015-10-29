@@ -29,6 +29,7 @@ public class EmployeesApplicationTests {
     private MockMvc mockMvc;
 
     private static final String EMPLOYEES_10_RESULTS = "src/test/java/com/bjss/william/employees/resources/employees-10-results.json";
+    private static final String EMPLOYEES_20_RESULTS = "src/test/java/com/bjss/william/employees/resources/employees-20-results.json";
 
     @Autowired
     EmployeesController employeesController;
@@ -60,6 +61,20 @@ public class EmployeesApplicationTests {
         String actualJsonString = result.getResponse().getContentAsString();
 
         Path path = Paths.get(EMPLOYEES_10_RESULTS);
+        String expectedJsonString = Files.lines(path).collect(Collectors.joining());
+
+        actualJsonString = actualJsonString.replaceAll("\\s+", "");
+        expectedJsonString = expectedJsonString.replaceAll("\\s+", "");
+
+        Assert.assertEquals(expectedJsonString, actualJsonString);
+    }
+
+    @Test
+    public void testGetListOfTwentyEmployees() throws Exception {
+        MvcResult result = mockMvc.perform(get("/employees?limit=20")).andReturn();
+        String actualJsonString = result.getResponse().getContentAsString();
+
+        Path path = Paths.get(EMPLOYEES_20_RESULTS);
         String expectedJsonString = Files.lines(path).collect(Collectors.joining());
 
         actualJsonString = actualJsonString.replaceAll("\\s+", "");
