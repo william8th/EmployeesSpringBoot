@@ -11,7 +11,7 @@ import java.sql.Date;
 
 @Embeddable
 public class TitlePrimaryKey implements Serializable {
-    @Column(name = "emp_no")
+    @Column(name = "emp_no", insertable = false, updatable = false)
     protected int employeeNumber;
 
     @Column(name = "title")
@@ -23,9 +23,27 @@ public class TitlePrimaryKey implements Serializable {
     public TitlePrimaryKey() {
     }
 
-    public TitlePrimaryKey(int employeeNumber, String title, Date fromDate) {
+    public int getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(int employeeNumber) {
         this.employeeNumber = employeeNumber;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
     }
 

@@ -1,5 +1,7 @@
 package com.bjss.william.employees.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -29,7 +31,8 @@ public class Employee {
     @Column(name = "hire_date")
     private Date hireDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<Title> titles;
 
     public Employee() {
@@ -38,6 +41,10 @@ public class Employee {
 
     public List<Title> getTitles() {
         return titles;
+    }
+
+    public void setTitles(List<Title> titles) {
+        this.titles = titles;
     }
 
     public void setEmployeeNumber(int employeeNumber) {

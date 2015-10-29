@@ -12,36 +12,24 @@ import java.sql.Date;
 public class Title {
 
     @EmbeddedId
-    private TitlePrimaryKey titlePrimaryKey;
+    private TitlePrimaryKey id;
 
     @Column(name = "to_date")
     private Date toDate;
 
+    @ManyToOne
+    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    private Employee employee;
+
     public Title() {
     }
 
-    public int getEmployeeNumber() {
-        return titlePrimaryKey.employeeNumber;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeNumber(int employeeNumber) {
-        titlePrimaryKey.employeeNumber = employeeNumber;
-    }
-
-    public String getTitle() {
-        return titlePrimaryKey.title;
-    }
-
-    public void setTitle(String title) {
-        titlePrimaryKey.title = title;
-    }
-
-    public Date getFromDate() {
-        return titlePrimaryKey.fromDate;
-    }
-
-    public void setFromDate(Date fromDate) {
-        titlePrimaryKey.fromDate = fromDate;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Date getToDate() {
@@ -52,13 +40,12 @@ public class Title {
         this.toDate = toDate;
     }
 
-    @Override
-    public String toString() {
-        return "Title{" +
-                "employeeNumber=" + titlePrimaryKey.employeeNumber +
-                ", title='" + titlePrimaryKey.title + '\'' +
-                ", fromDate=" + titlePrimaryKey.fromDate +
-                ", toDate=" + toDate +
-                '}';
+    public TitlePrimaryKey getId() {
+        return id;
     }
+
+    public void setId(TitlePrimaryKey id) {
+        this.id = id;
+    }
+
 }
