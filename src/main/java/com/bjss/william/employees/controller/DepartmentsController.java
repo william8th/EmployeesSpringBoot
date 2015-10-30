@@ -65,7 +65,7 @@ public class DepartmentsController {
         try {
             Department department = departmentService.getDepartmentById(id);
 
-            if (department == null) throw new RuntimeException();
+            if (department == null) throw new RuntimeException("No department found with ID provided");
 
             return new ResponseEntity<>(department.getDepartmentEmployees(), HttpStatus.OK);
         } catch (RuntimeException e) {

@@ -1,5 +1,7 @@
 package com.bjss.william.employees.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -8,11 +10,16 @@ import java.sql.Date;
  */
 
 @Entity
+@IdClass(DepartmentManagerPrimaryKey.class)
 @Table(name = "dept_manager")
 public class DepartmentManager {
 
-    @EmbeddedId
-    private DepartmentManagerPrimaryKey id;
+    @Id
+    @JsonIgnore
+    private String departmentNumber;
+
+    @Id
+    private int employeeNumber;
 
     @Column(name = "from_date")
     private Date fromDate;
@@ -22,21 +29,31 @@ public class DepartmentManager {
 
     @ManyToOne
     @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    @JsonIgnore
     private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "dept_no", insertable = false, updatable = false)
+    @JsonIgnore
     private Department department;
 
     public DepartmentManager() {
     }
 
-    public DepartmentManagerPrimaryKey getId() {
-        return id;
+    public String getDepartmentNumber() {
+        return departmentNumber;
     }
 
-    public void setId(DepartmentManagerPrimaryKey id) {
-        this.id = id;
+    public void setDepartmentNumber(String departmentNumber) {
+        this.departmentNumber = departmentNumber;
+    }
+
+    public int getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
 
     public Date getFromDate() {

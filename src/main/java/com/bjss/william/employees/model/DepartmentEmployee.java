@@ -10,11 +10,16 @@ import java.sql.Date;
  */
 
 @Entity
+@IdClass(DepartmentEmployeePrimaryKey.class)
 @Table(name = "dept_emp")
 public class DepartmentEmployee {
 
-    @EmbeddedId
-    private DepartmentEmployeePrimaryKey id;
+    @Id
+    @JsonIgnore
+    private String departmentNumber;
+
+    @Id
+    private int employeeNumber;
 
     @Column(name = "from_date")
     private Date fromDate;
@@ -35,12 +40,20 @@ public class DepartmentEmployee {
     public DepartmentEmployee() {
     }
 
-    public DepartmentEmployeePrimaryKey getId() {
-        return id;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
-    public void setId(DepartmentEmployeePrimaryKey id) {
-        this.id = id;
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public String getDepartmentNumber() {
+        return departmentNumber;
+    }
+
+    public void setDepartmentNumber(String departmentNumber) {
+        this.departmentNumber = departmentNumber;
     }
 
     public Date getFromDate() {
