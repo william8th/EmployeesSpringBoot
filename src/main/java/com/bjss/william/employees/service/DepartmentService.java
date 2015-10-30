@@ -24,4 +24,8 @@ public class DepartmentService {
         Pageable resultLimit = new PageRequest(0, limit);
         return departmentRepository.findAll(resultLimit).getContent();
     }
+
+    public Department getDepartmentById(String id) {
+        return departmentRepository.findOne(id);
+    }
 }

@@ -38,4 +38,20 @@ public class DepartmentsController {
         }
 
     }
+
+    @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Department> getDepartmentById(@PathVariable String id) {
+
+        try {
+            Department department = departmentService.getDepartmentById(id);
+
+            if (department == null) throw new RuntimeException();
+
+            return new ResponseEntity<>(department, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
