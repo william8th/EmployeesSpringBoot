@@ -21,11 +21,11 @@ public class Department {
     @Column(name = "dept_name")
     private String departmentName;
 
-    @OneToMany
+    @OneToMany(mappedBy = "department")
     @JsonIgnore
     private List<DepartmentManager> departmentManagers;
 
-    @OneToMany
+    @OneToMany(mappedBy = "department")
     @JsonIgnore
     private List<DepartmentEmployee> departmentEmployees;
 

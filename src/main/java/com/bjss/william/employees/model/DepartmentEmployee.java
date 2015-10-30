@@ -1,5 +1,7 @@
 package com.bjss.william.employees.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -11,7 +13,7 @@ import java.sql.Date;
 @Table(name = "dept_emp")
 public class DepartmentEmployee {
 
-    @Id
+    @EmbeddedId
     private DepartmentEmployeePrimaryKey id;
 
     @Column(name = "from_date")
@@ -22,10 +24,12 @@ public class DepartmentEmployee {
 
     @ManyToOne
     @JoinColumn(name = "emp_no", insertable = false, updatable = false)
+    @JsonIgnore
     private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "dept_no", insertable = false, updatable = false)
+    @JsonIgnore
     private Department department;
 
     public DepartmentEmployee() {

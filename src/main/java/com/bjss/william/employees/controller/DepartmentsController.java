@@ -1,6 +1,9 @@
 package com.bjss.william.employees.controller;
 
 import com.bjss.william.employees.model.Department;
+import com.bjss.william.employees.model.DepartmentEmployee;
+import com.bjss.william.employees.model.DepartmentManager;
+import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +52,38 @@ public class DepartmentsController {
             if (department == null) throw new RuntimeException();
 
             return new ResponseEntity<>(department, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @RequestMapping(value = "/departments/{id}/employees", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<DepartmentEmployee>> getDepartmentEmployeesById(@PathVariable String id) {
+
+        try {
+            Department department = departmentService.getDepartmentById(id);
+
+            if (department == null) throw new RuntimeException();
+
+            return new ResponseEntity<>(department.getDepartmentEmployees(), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @RequestMapping(value = "/departments/{id}/managers", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<DepartmentManager>> getDepartmentManagersById(@PathVariable String id) {
+
+        try {
+            Department department = departmentService.getDepartmentById(id);
+
+            if (department == null) throw new RuntimeException();
+
+            return new ResponseEntity<>(department.getDepartmentManagers(), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

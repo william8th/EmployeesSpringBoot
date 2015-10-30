@@ -8,9 +8,10 @@ import java.sql.Date;
  */
 
 @Entity
+@Table(name = "dept_manager")
 public class DepartmentManager {
 
-    @Id
+    @EmbeddedId
     private DepartmentManagerPrimaryKey id;
 
     @Column(name = "from_date")
@@ -20,11 +21,11 @@ public class DepartmentManager {
     private Date toDate;
 
     @ManyToOne
-    @JoinColumn(name = "emp_no")
+    @JoinColumn(name = "emp_no", insertable = false, updatable = false)
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "dept_no")
+    @JoinColumn(name = "dept_no", insertable = false, updatable = false)
     private Department department;
 
     public DepartmentManager() {

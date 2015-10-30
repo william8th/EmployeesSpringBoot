@@ -42,6 +42,10 @@ public class Employee implements Serializable {
     @JsonIgnore
     private List<Salary> salaries;
 
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private List<DepartmentManager> departmentManagers;
+
     public Employee() {
         super();
     }
@@ -110,10 +114,12 @@ public class Employee implements Serializable {
         return hireDate;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeModel [employeeNumber=" + employeeNumber + ", birthDate=" + birthDate + ", firstName="
-                + firstName + ", lastName=" + lastName + ", gender=" + gender + ", hireDate=" + hireDate + "]";
+    public List<DepartmentManager> getDepartmentManagers() {
+        return departmentManagers;
+    }
+
+    public void setDepartmentManagers(List<DepartmentManager> departmentManagers) {
+        this.departmentManagers = departmentManagers;
     }
 
 }
