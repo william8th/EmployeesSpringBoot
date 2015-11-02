@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping("/departments")
 public class DepartmentsController {
 
     private final static String DEFAULT_RESULT_LIMIT = "10";
@@ -29,7 +30,7 @@ public class DepartmentsController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Department>> getDepartments(
             @RequestParam(defaultValue = DEFAULT_RESULT_LIMIT, required = false) String limit
@@ -47,7 +48,8 @@ public class DepartmentsController {
 
     }
 
-    @RequestMapping(value = "/departments", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public ResponseEntity<DepartmentCreated> addDepartment(
             HttpServletRequest httpServletRequest,
@@ -75,7 +77,8 @@ public class DepartmentsController {
         }
     }
 
-    @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Department> getDepartmentById(@PathVariable String id) {
 
@@ -91,7 +94,8 @@ public class DepartmentsController {
 
     }
 
-    @RequestMapping(value = "/departments/{id}/employees", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}/employees", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<DepartmentEmployee>> getDepartmentEmployeesById(@PathVariable String id) {
 
@@ -107,7 +111,8 @@ public class DepartmentsController {
 
     }
 
-    @RequestMapping(value = "/departments/{id}/managers", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}/managers", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<DepartmentManager>> getDepartmentManagersById(@PathVariable String id) {
 

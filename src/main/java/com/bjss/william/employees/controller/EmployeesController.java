@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/employees")
 public class EmployeesController {
 
     // Using String because parameter needs to default to String value
@@ -24,7 +25,7 @@ public class EmployeesController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Employee>> getEmployees(
             @RequestParam(defaultValue = DEFAULT_RESULT_LIMIT, required = false) String limit
@@ -40,30 +41,13 @@ public class EmployeesController {
     }
 
 
-    @RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") String id) {
-        Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
-
-        if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(employee, HttpStatus.OK);
-        }
-    }
-
-
-    @RequestMapping(
-            value = "/employees",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE
-    )
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<EmployeeCreated> addEmployee(
             HttpServletRequest httpServletRequest,
             @RequestBody Employee employee
     ) {
-        employeeService.addEmployee(employee);
+        Employee newEmployee = employeeService.addEmployee(employee);
 
         if (employee.getEmployeeNumber() == 0) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,6 +69,19 @@ public class EmployeesController {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
 
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") String id) {
+        Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
+
+        if (employee == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
     }
 }
 
