@@ -47,11 +47,7 @@ public class DepartmentsController {
 
     }
 
-    @RequestMapping(
-            value = "/departments",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE
-    )
+    @RequestMapping(value = "/departments", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<DepartmentCreated> addDepartment(
             HttpServletRequest httpServletRequest,

@@ -8,15 +8,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class EmployeesController {
@@ -92,16 +89,16 @@ public class EmployeesController {
 }
 
 class EmployeeCreated  {
-    private int employeedNumber;
+    private int employeeNumber;
     private String location;
 
-    public EmployeeCreated(int employeedNumber, String location) {
-        this.employeedNumber = employeedNumber;
+    public EmployeeCreated(int employeeNumber, String location) {
+        this.employeeNumber = employeeNumber;
         this.location = location;
     }
 
-    public int getEmployeedNumber() {
-        return employeedNumber;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
     public String getLocation() {
