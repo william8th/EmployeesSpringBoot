@@ -49,22 +49,19 @@ public class EmployeesController {
     ) {
         Employee newEmployee = employeeService.addEmployee(employee);
 
-        if (employee.getEmployeeNumber() == 0) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
         String newLocation = EmployeesApplication.formatLocation(
                 httpServletRequest.getRequestURL().toString(),
-                Integer.toString(employee.getEmployeeNumber()));
+                Integer.toString(newEmployee.getEmployeeNumber()));
         try {
             URI uri = new URI(newLocation);
             HttpHeaders httpResponseHeaders = new HttpHeaders();
             httpResponseHeaders.setLocation(uri);
 
             return new ResponseEntity<>(
-                    new EmployeeCreated(employee.getEmployeeNumber(), newLocation),
+                    new EmployeeCreated(newEmployee.getEmployeeNumber(), newLocation),
                     httpResponseHeaders,
                     HttpStatus.CREATED);
+
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }

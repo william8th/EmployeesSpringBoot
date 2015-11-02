@@ -21,8 +21,8 @@ public class EmployeeService  {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public void addEmployee(Employee employee) {
-        employeeRepository.saveAndFlush(employee);
+    public Employee addEmployee(Employee employee) {
+        return employeeRepository.saveAndFlush(employee);
     }
 
     public Employee getEmployeeById(int employeeNumber) {
