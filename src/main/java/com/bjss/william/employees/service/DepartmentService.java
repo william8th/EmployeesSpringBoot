@@ -44,8 +44,7 @@ public class DepartmentService {
             int newId = oldId + 1;
             String newDepartmentId = String.format("%s%03d", DEPARTMENT_ID_PREFIX, newId);
             department.setDepartmentId(newDepartmentId);
-            Department createdDepartment = departmentRepository.saveAndFlush(department);
-            return createdDepartment;
+            return departmentRepository.save(department);
         } catch (NumberFormatException e) {
             // Problem in database configuration
             e.printStackTrace();

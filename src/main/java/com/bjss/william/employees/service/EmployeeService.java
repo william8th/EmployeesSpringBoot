@@ -20,7 +20,7 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee addEmployee(Employee employee) {
-        return employeeRepository.saveAndFlush(employee);
+        return employeeRepository.save(employee);
     }
 
     public Employee getEmployeeById(int employeeNumber) {
