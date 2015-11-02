@@ -9,4 +9,8 @@ public class EmployeesApplication {
     public static void main(String[] args) {
         SpringApplication.run(EmployeesApplication.class, args);
     }
+
+    public static String formatLocation(String requestURL, String id) {
+        return String.format("%s/%s", requestURL, id);
+    }
 }

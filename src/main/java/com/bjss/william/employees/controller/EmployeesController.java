@@ -1,5 +1,6 @@
 package com.bjss.william.employees.controller;
 
+import com.bjss.william.employees.EmployeesApplication;
 import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,13 +72,18 @@ public class EmployeesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        String newLocation = String.format("%s/%d", httpServletRequest.getRequestURL(), employee.getEmployeeNumber());
+        String newLocation = EmployeesApplication.formatLocation(
+                httpServletRequest.getRequestURL().toString(),
+                Integer.toString(employee.getEmployeeNumber()));
         try {
             URI uri = new URI(newLocation);
             HttpHeaders httpResponseHeaders = new HttpHeaders();
             httpResponseHeaders.setLocation(uri);
 
-            return new ResponseEntity<>(new EmployeeCreated(employee.getEmployeeNumber(), newLocation), httpResponseHeaders, HttpStatus.CREATED);
+            return new ResponseEntity<>(
+                    new EmployeeCreated(employee.getEmployeeNumber(), newLocation),
+                    httpResponseHeaders,
+                    HttpStatus.CREATED);
         } catch (URISyntaxException e) {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }

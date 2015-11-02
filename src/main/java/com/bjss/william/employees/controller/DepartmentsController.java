@@ -1,15 +1,20 @@
 package com.bjss.william.employees.controller;
 
+import com.bjss.william.employees.EmployeesApplication;
 import com.bjss.william.employees.model.Department;
 import com.bjss.william.employees.model.DepartmentEmployee;
 import com.bjss.william.employees.model.DepartmentManager;
-import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -40,6 +45,38 @@ public class DepartmentsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @RequestMapping(
+            value = "/departments",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<DepartmentCreated> addDepartment(
+            HttpServletRequest httpServletRequest,
+            @RequestBody Department department
+    ) {
+        Department newDepartment = departmentService.addDepartment(department);
+
+        if (newDepartment == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        try {
+            String newLocation = EmployeesApplication.formatLocation(
+                    httpServletRequest.getRequestURL().toString(),
+                    newDepartment.getDepartmentId());
+            URI uri = new URI(newLocation);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(uri);
+            return new ResponseEntity<>(new DepartmentCreated(
+                    newDepartment.getDepartmentId(), newLocation),
+                    httpHeaders,
+                    HttpStatus.CREATED);
+        } catch (URISyntaxException e) {
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        }
     }
 
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
@@ -88,5 +125,23 @@ public class DepartmentsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+}
+
+class DepartmentCreated {
+    private String departmentId;
+    private String location;
+
+    public DepartmentCreated(String departmentId, String location) {
+        this.departmentId = departmentId;
+        this.location = location;
+    }
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
