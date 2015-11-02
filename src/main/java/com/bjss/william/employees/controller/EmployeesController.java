@@ -82,7 +82,7 @@ public class EmployeesController {
     }
 }
 
-class EmployeeCreated  {
+class EmployeeCreated {
     private int employeeNumber;
     private String location;
 

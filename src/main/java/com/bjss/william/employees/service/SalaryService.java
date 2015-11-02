@@ -4,7 +4,6 @@ import com.bjss.william.employees.hibernate.EmployeeRepository;
 import com.bjss.william.employees.model.Employee;
 import com.bjss.william.employees.model.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
  */
 
 @Service
-@Repository
 public class SalaryService {
 
     @Autowired
