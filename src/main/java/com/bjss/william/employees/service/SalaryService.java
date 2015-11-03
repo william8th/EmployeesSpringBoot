@@ -23,6 +23,7 @@ public class SalaryService {
 
     public List<Salary> getSalariesByEmployeeId(final int employeeNumber) throws NoSuchElementException {
         Employee employee = employeeRepository.findOne(employeeNumber);
+        if (employee == null) throw new NoSuchElementException("Employee not found");
         return employee.getSalaries();
     }
 
