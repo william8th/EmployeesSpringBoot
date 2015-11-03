@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -67,12 +68,11 @@ public class EmployeesController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<EmployeeResource> getEmployeeById(@PathVariable(value = "id") String id) {
-        Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
-
-        if (employee == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        try {
+            Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
             return new ResponseEntity<>(new EmployeeResource(employee), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

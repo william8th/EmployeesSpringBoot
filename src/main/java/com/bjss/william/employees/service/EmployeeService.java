@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by William Heng(dev) on 29/10/15.
@@ -23,8 +24,10 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee getEmployeeById(int employeeNumber) {
-        return employeeRepository.findOne(employeeNumber);
+    public Employee getEmployeeById(int employeeNumber) throws NoSuchElementException {
+        Employee employee = employeeRepository.findOne(employeeNumber);
+        if (employee == null) throw new NoSuchElementException("Employee not found");
+        return employee;
     }
 
     public List<Employee> getEmployees(int limit) {
