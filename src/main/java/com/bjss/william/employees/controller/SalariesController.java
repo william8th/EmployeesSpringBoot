@@ -1,5 +1,6 @@
 package com.bjss.william.employees.controller;
 
+import com.bjss.william.employees.EmployeesApplication;
 import com.bjss.william.employees.model.Salary;
 import com.bjss.william.employees.model.hateoas.SalaryResource;
 import com.bjss.william.employees.service.SalaryService;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -60,7 +60,7 @@ public class SalariesController {
         try {
             int employeeNumber = Integer.parseInt(id);
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df = EmployeesApplication.getDateFormat();
             Date parsedDate = df.parse(date);
 
             Salary salary = salaryService.getSalaryByEmployeeIdAndFromDate(employeeNumber, parsedDate);
