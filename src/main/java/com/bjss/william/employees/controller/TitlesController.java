@@ -15,12 +15,13 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping("/titles")
 public class TitlesController {
 
     @Autowired
     private TitleService titleService;
 
-    @RequestMapping(value = "/employees/{id}/titles", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Title>> getTitlesById(@PathVariable(value = "id") String id) {
         try {
