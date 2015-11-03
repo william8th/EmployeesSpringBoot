@@ -8,7 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
@@ -24,10 +29,10 @@ public class SalariesController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<SalaryResource>> getSalariesById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<List<SalaryResource>> getSalariesByEmployeeId(@PathVariable(value = "id") String id) {
         try {
             int employeeNumber = Integer.parseInt(id);
-            List<Salary> salaries = salaryService.getSalariesById(employeeNumber);
+            List<Salary> salaries = salaryService.getSalariesByEmployeeId(employeeNumber);
 
 
             if (salaries == null) {
@@ -43,7 +48,30 @@ public class SalariesController {
         } catch (NumberFormatException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
 
+    @RequestMapping(value = "/{id}/{date}")
+    @ResponseBody
+    public ResponseEntity<SalaryResource> getSalaryById(
+            @PathVariable(value = "id") String id,
+            @PathVariable(value = "date") String date
+    ) {
+        try {
+            int employeeNumber = Integer.parseInt(id);
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = df.parse(date);
+
+            Salary salary = salaryService.getSalaryByEmployeeIdAndFromDate(employeeNumber, parsedDate);
+            SalaryResource salaryResource = new SalaryResource(salary);
+
+            return new ResponseEntity<>(salaryResource, HttpStatus.FOUND);
+
+        } catch (NumberFormatException | ParseException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

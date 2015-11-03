@@ -15,7 +15,6 @@ import java.sql.Date;
 public class Salary {
 
     @Id
-    @JsonIgnore
     private int employeeNumber;
 
     @Column(name = "salary")
