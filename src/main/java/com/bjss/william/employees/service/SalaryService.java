@@ -27,7 +27,7 @@ public class SalaryService {
         return employee.getSalaries();
     }
 
-    public Salary getSalaryByEmployeeIdAndFromDate(final int employeeNumber, final Date fromDate) {
+    public Salary getSalary(final int employeeNumber, final Date fromDate) {
         Employee employee = employeeRepository.findOne(employeeNumber);
         Optional<Salary> salary = employee.getSalaries()
                 .stream()

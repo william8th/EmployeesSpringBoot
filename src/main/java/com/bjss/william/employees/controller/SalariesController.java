@@ -63,7 +63,7 @@ public class SalariesController {
             DateFormat df = EmployeesApplication.getDateFormat();
             Date parsedDate = df.parse(date);
 
-            Salary salary = salaryService.getSalaryByEmployeeIdAndFromDate(employeeNumber, parsedDate);
+            Salary salary = salaryService.getSalary(employeeNumber, parsedDate);
             SalaryResource salaryResource = new SalaryResource(salary);
 
             return new ResponseEntity<>(salaryResource, HttpStatus.FOUND);
