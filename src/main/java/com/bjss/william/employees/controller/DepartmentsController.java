@@ -93,7 +93,7 @@ public class DepartmentsController {
 
             return new ResponseEntity<>(departmentResource, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -110,7 +110,7 @@ public class DepartmentsController {
 
             return new ResponseEntity<>(department.getDepartmentEmployees(), HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
@@ -127,7 +127,7 @@ public class DepartmentsController {
 
             return new ResponseEntity<>(department.getDepartmentManagers(), HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }

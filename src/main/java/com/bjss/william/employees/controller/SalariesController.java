@@ -36,7 +36,7 @@ public class SalariesController {
 
 
             if (salaries == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 List<SalaryResource> salaryResources = salaries
                         .stream()
@@ -46,7 +46,7 @@ public class SalariesController {
             }
 
         } catch (NumberFormatException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -28,21 +29,14 @@ public class EmployeesController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<EmployeeResource>> getEmployees(
-            @RequestParam(defaultValue = DEFAULT_RESULT_LIMIT, required = false) String limit
+            @RequestParam(defaultValue = DEFAULT_RESULT_LIMIT, required = false) Integer limit
     ) {
-        try {
-            int resultLimit = Integer.parseInt(limit);
-            List<EmployeeResource> employeeResources = employeeService.getEmployees(resultLimit)
-                    .stream()
-                    .map(EmployeeResource::new)
-                    .collect(Collectors.toList());
+        List<EmployeeResource> employeeResources = employeeService.getEmployees(limit)
+                .stream()
+                .map(EmployeeResource::new)
+                .collect(Collectors.toList());
 
-            return new ResponseEntity<>(employeeResources, HttpStatus.OK);
-        } catch (NumberFormatException e) {
-            // Not a valid number
-            // Return error
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(employeeResources, HttpStatus.OK);
     }
 
 
@@ -50,7 +44,7 @@ public class EmployeesController {
     @ResponseBody
     public ResponseEntity<EmployeeResource> addEmployee(
             HttpServletRequest httpServletRequest,
-            @RequestBody Employee employee
+            @Valid @RequestBody Employee employee
     ) {
         Employee newEmployee = employeeService.addEmployee(employee);
         EmployeeResource newEmployeeResource = new EmployeeResource(newEmployee);
@@ -67,9 +61,9 @@ public class EmployeesController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<EmployeeResource> getEmployeeById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<EmployeeResource> getEmployeeById(@PathVariable(value = "id") int id) {
         try {
-            Employee employee = employeeService.getEmployeeById(Integer.parseInt(id));
+            Employee employee = employeeService.getEmployeeById(id);
             return new ResponseEntity<>(new EmployeeResource(employee), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

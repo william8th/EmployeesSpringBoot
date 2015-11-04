@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "employees")
@@ -16,22 +19,28 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "emp_no")
+    @NotNull @Digits(integer = 5, fraction = 0)
     private int employeeNumber;
 
     @Column(name = "birth_date")
+    @NotNull
     private Date birthDate;
 
     @Column(name = "first_name")
+    @NotNull @Size(max = 14)
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull @Size(max = 16)
     private String lastName;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private GenderEnum gender;
 
     @Column(name = "hire_date")
+    @NotNull
     private Date hireDate;
 
     @OneToMany(mappedBy = "employee")
