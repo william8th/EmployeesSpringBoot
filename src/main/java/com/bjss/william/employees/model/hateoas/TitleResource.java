@@ -24,7 +24,6 @@ public class TitleResource extends GenericResource {
 
         this.add(selfLinkBuilder.withSelfRel());  // Self
         this.add(linkTo(EmployeesController.class).slash(title.getEmployeeNumber()).withRel("employee"));  // Employee
-        this.add(linkTo(TitlesController.class).slash(title.getEmployeeNumber()).withRel("titles"));  // Title
     }
 
     public Title getTitle() {
