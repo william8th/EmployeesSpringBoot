@@ -1,9 +1,9 @@
 package com.bjss.william.employees.controller;
 
-import com.bjss.william.employees.EmployeesApplication;
 import com.bjss.william.employees.model.Department;
 import com.bjss.william.employees.model.DepartmentEmployee;
 import com.bjss.william.employees.model.DepartmentManager;
+import com.bjss.william.employees.model.hateoas.DepartmentResource;
 import com.bjss.william.employees.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
  * Created by William Heng(dev) on 29/10/15.
@@ -32,17 +34,21 @@ public class DepartmentsController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<Department>> getDepartments(
+    public ResponseEntity<List<DepartmentResource>> getDepartments(
             @RequestParam(defaultValue = DEFAULT_RESULT_LIMIT, required = false) String limit
     ) {
 
         try {
             int resultLimit = Integer.parseInt(limit);
+            if (resultLimit < 1) throw new IllegalArgumentException("Invalid limit argument");
 
-            if (resultLimit < 1) throw new RuntimeException();
+            List<DepartmentResource> departmentResources = departmentService.getDepartments(resultLimit)
+                    .stream()
+                    .map(DepartmentResource::new)
+                    .collect(Collectors.toList());
 
-            return new ResponseEntity<>(departmentService.getDepartments(resultLimit), HttpStatus.OK);
-        } catch (RuntimeException e) {
+            return new ResponseEntity<>(departmentResources, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -51,7 +57,7 @@ public class DepartmentsController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<DepartmentCreated> addDepartment(
+    public ResponseEntity<DepartmentResource> addDepartment(
             HttpServletRequest httpServletRequest,
             @RequestBody Department department
     ) {
@@ -61,34 +67,31 @@ public class DepartmentsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        try {
-            String newLocation = EmployeesApplication.formatLocation(
-                    httpServletRequest.getRequestURL().toString(),
-                    newDepartment.getDepartmentId());
-            URI uri = new URI(newLocation);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(uri);
-            return new ResponseEntity<>(new DepartmentCreated(
-                    newDepartment.getDepartmentId(), newLocation),
-                    httpHeaders,
-                    HttpStatus.CREATED);
-        } catch (URISyntaxException e) {
-            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
-        }
+        DepartmentResource newDepartmentResource = new DepartmentResource(newDepartment);
+        URI uri = newDepartmentResource.getUri();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(uri);
+
+        return new ResponseEntity<>(
+                newDepartmentResource,
+                httpHeaders,
+                HttpStatus.CREATED);
+
     }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Department> getDepartmentById(@PathVariable String id) {
+    public ResponseEntity<DepartmentResource> getDepartmentById(@PathVariable String id) {
 
         try {
             Department department = departmentService.getDepartmentById(id);
 
-            if (department == null) throw new RuntimeException();
+            DepartmentResource departmentResource = new DepartmentResource(department);
+            departmentResource.add(linkTo(DepartmentsController.class).withRel("departments"));
 
-            return new ResponseEntity<>(department, HttpStatus.OK);
-        } catch (RuntimeException e) {
+            return new ResponseEntity<>(departmentResource, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -126,23 +129,5 @@ public class DepartmentsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-    }
-}
-
-class DepartmentCreated {
-    private String departmentId;
-    private String location;
-
-    public DepartmentCreated(String departmentId, String location) {
-        this.departmentId = departmentId;
-        this.location = location;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public String getLocation() {
-        return location;
     }
 }

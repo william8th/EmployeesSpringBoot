@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by William Heng(dev) on 29/10/15.
@@ -28,8 +29,10 @@ public class DepartmentService {
         return departmentRepository.findAll(resultLimit).getContent();
     }
 
-    public Department getDepartmentById(String id) {
-        return departmentRepository.findOne(id);
+    public Department getDepartmentById(String id) throws NoSuchElementException {
+        Department department = departmentRepository.findOne(id);
+        if (department == null) throw new NoSuchElementException("Department not found");
+        return department;
     }
 
     @Transactional
