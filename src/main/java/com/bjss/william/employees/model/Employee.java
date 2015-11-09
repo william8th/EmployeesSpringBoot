@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,11 +20,12 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "emp_no")
-    @NotNull @Digits(integer = 5, fraction = 0)
+    @NotNull @Digits(integer = 11, fraction = 0)
     private int employeeNumber;
 
     @Column(name = "birth_date")
-    @NotNull
+    @Temporal(TemporalType.DATE)
+    @NotNull @Past
     private Date birthDate;
 
     @Column(name = "first_name")
@@ -40,6 +42,7 @@ public class Employee implements Serializable {
     private GenderEnum gender;
 
     @Column(name = "hire_date")
+    @Temporal(TemporalType.DATE)
     @NotNull
     private Date hireDate;
 
