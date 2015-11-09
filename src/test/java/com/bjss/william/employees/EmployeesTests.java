@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,10 +22,12 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = EmployeesApplication.class)
+@WebAppConfiguration
 public class EmployeesTests {
 
     private MockMvc mockMvc;
@@ -34,9 +38,12 @@ public class EmployeesTests {
     @Autowired
     EmployeesController employeesController;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(employeesController).build();
+        this.mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
